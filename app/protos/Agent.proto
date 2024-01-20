@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+
+message World {  // 世界
+	int32 id = 1;
+
+	string key = 2;
+}
+
+message NPC {  // 角色
+	int32 id = 1;
+
+	string key = 2;
+}
+
+message Item {  // 物品
+	int32 id = 1;
+
+	string key = 2;
+}
+
+message Position {  // 位置
+	string name = 1;
+}
+
+message Event {  // 事件
+	string text = 1;
+
+	EventStatus status = 2;
+
+	EventType type = 3;
+}
+
+enum EventStatus {  // 交互动作状态
+	START = 0;
+
+	DOING = 1;
+
+	END = 2;
+}
+
+enum EventType {  // 交互动作类型
+    CHAT = 0;
+
+    EVENT = 1;
+}
+
+message Order {  // 指令
+    string text = 1;
+
+    int32 duration = 2;
+}
+
+message AgentQuery {  // Agent请求
+    World world = 1;
+
+    Position position = 2;
+
+    NPC sourceNPC = 3;
+
+    Event event = 4;
+
+    NPC interactNPC = 5;
+
+    repeated Item interactItems = 6;
+
+    Order order = 7;
+}
+
+message AgentReply {  // Agent返回
+    World world = 1;
+
+    Position position = 2;
+
+    Order order = 3;
+
+    repeated Item interactItems = 4;
+}
