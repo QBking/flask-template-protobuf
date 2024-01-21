@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.pb2s.Agent_pb2 import AgentQuery, AgentReply, Order, World, Position
+from app.pb2s.Agent_pb2 import AgentQuery, AgentReply
 
 
 agent_bp = Blueprint('agent', __name__, url_prefix='/agent')
