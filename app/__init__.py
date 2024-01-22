@@ -8,4 +8,10 @@ def create_app():
     from app.apis.agent import agent_bp
 
     app.register_blueprint(agent_bp)
+    
+    # 服务端测试
+    @app.route('/test', methods=['GET'])
+    def test():
+        return '你好啊！ Hello!'
+    
     return app
