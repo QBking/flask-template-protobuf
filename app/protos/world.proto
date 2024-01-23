@@ -1,0 +1,76 @@
+syntax = "proto3";
+package aigame.world;
+import "google/protobuf/any.proto";
+option java_multiple_files = true;
+
+message WorldArea {
+	string name = 1;
+	repeated WorldArea areas = 2;
+}
+
+message CreateWorldQuery { 
+	
+	message NPCInitData {  // 角色
+		int32 id = 1;
+		int64 key = 2;
+		string area = 3;//所处区域
+	}
+
+	int32 world_id = 1;
+
+	int64 world_key = 2;
+	
+	WorldArea areas = 3;
+	
+	repeated NPCInitData npc_datas = 4;
+         
+}
+
+message CreateWorldReply { 
+	
+	message NPCInitOrder {  // 角色
+		int64 key = 1;
+
+		google.protobuf.Any order = 2;//初始指令
+	}
+
+	int64 world_key = 1;
+	
+	WorldArea areas = 2;
+	
+	repeated NPCInitOrder npc_orders = 3;
+         
+}
+
+message HeartBeatQuery { 
+
+	int64 world_key = 1;
+	
+	int64 time = 2;
+}
+
+message HeartBeatReply { 
+
+	int64 world_key = 1;
+	
+	int64 time = 2;
+}
+
+
+message EndWorldQuery { 
+
+	int64 world_key = 1;
+	
+	string reason = 2;
+	
+	bool success = 3;
+}
+
+message EndWorldReply { 
+
+	int64 world_key = 1;
+	
+	string reason = 2;
+
+	bool success = 3;
+}

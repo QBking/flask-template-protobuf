@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package aigame.agent;
+
+import "world.proto";
+import "google/protobuf/any.proto";
+
+message World {  // 世界
+	int32 id = 1;  // 模板ID
+
+	int64 key = 2;  // 实例ID
+}
+
+message NPC {  // 角色
+	int32 id = 1;
+
+	int64 key = 2;
+}
+
+message Item {  // 物品
+	int32 id = 1;
+
+	int64 key = 2;
+}
+
+message Event {  // 事件
+	string text = 1;
+
+	EventStatus status = 2;
+
+	EventType type = 3;
+}
+
+enum EventStatus {  // 交互动作状态
+	DOING = 0;
+
+	START = 1;
+
+	END = 2;
+}
+
+enum EventType {  // 交互动作类型
+    COMMON = 0;  // 普通行为
+
+    CHAT = 1;  // 对话
+}
+
+enum DestinationType {  // 目标类型
+    TYPE_AREA = 0;
+
+    TYPE_ITEM = 1;
+
+    TYPE_NPC = 2;
+}
+
+message CommonOrder {  // 普通指令=移动+普通行为
+    string action = 1;  // 行为
+    
+    int32 duration = 2;  // 持续时间
+
+    DestinationType destination_type = 3;  // AREA,ITEM,NPC
+
+    google.protobuf.Any destination = 4;  // 具体目的地/目标
+}
+
+message ChatOrder {  // 对话指令
+    NPC target = 1;
+
+    string text = 2;
+
+    EventStatus status = 3;
+}
+
+message AgentEventQuery {  // Agent请求
+    int64 world_key = 1;
+
+    int64 npc_key = 2;
+
+    aigame.world.WorldArea area = 3;
+
+    repeated Event event = 4;
+}
+
+message AgentOrderReply {  // Agent返回
+    int64 world_key = 1;
+
+    aigame.world.WorldArea area = 2;
+
+    int64 npc_key = 3;
+
+    EventType order_type = 4;
+
+    google.protobuf.Any order = 5;
+}
